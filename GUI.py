@@ -37,7 +37,7 @@ import pyautogui
 #### Create Window ####
 #######################
 
-tool_version = "1.0.0"
+tool_version = "1.0.1"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Princess Peach: Showtime!")
@@ -99,7 +99,7 @@ input_folder = None
 do_custom_ini = False
 zs_file_path = None
 
-image_name = "switch_normal.jpeg"
+# image_name = "switch_normal.jpeg"
 controller_layout_label = ""
 normal__xbox_layout = "Normal Layout:  A > B, B > A , X > Y, Y > X"
 PE__xbox_layout = "PE Layout: A > A, B > B, X > X, Y > Y"
@@ -610,12 +610,12 @@ def update_image(*args):
 
     image_path = os.path.join(script_directory, "images", image_name)
     
-    # Load and display the image
-    image = Image.open(image_path)
-    photo = customtkinter.CTkImage(image, size=(500,300))
-    image_label.configure(image=photo)
-    image_label.image = photo  # Keep a reference to the photo to prevent garbage collection
-    image_label.update()
+    # # Load and display the image
+    # image = Image.open(image_path)
+    # photo = customtkinter.CTkImage(image, size=(500,300))
+    # image_label.configure(image=photo)
+    # image_label.image = photo  # Keep a reference to the photo to prevent garbage collection
+    # image_label.update()
 
 def select_controller(*args):
     def change_menu(list, option_menu, option_var):
@@ -721,6 +721,6 @@ credits_label = ClickableLabel(master=notebook.tab("Credits"), text=
 pack_widgets()
 
 select_controller()
-update_image()
+# update_image()
 
 root.mainloop()
