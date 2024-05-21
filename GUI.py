@@ -37,10 +37,10 @@ import pyautogui
 #### Create Window ####
 #######################
 
-tool_version = "3.0.0"
+tool_version = "1.0.0"
 
 root = customtkinter.CTk()
-root.title(f"Fayaz's Settings {tool_version} for Mario vs Donkey Kong")
+root.title(f"Fayaz's Settings {tool_version} for Princess Peach: Showtime!")
 root.geometry("540x760")
 
 customtkinter.set_appearance_mode("system")
