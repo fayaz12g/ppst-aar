@@ -30,7 +30,7 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes, 
 @flag offset_shift 0x100
 
 @enabled
-085fd530 {hex_num}00000000000000000000000
+085fd530 {hex_num}0000000000000000000000
 0488e838 174DC13D{line_3}
 @disabled
 
@@ -41,4 +41,4 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes, 
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, 'w') as patch_file:
             patch_file.write(patch_content)
-        print(f"Patch file created: {file_path}")
+        print(f"{patch_file} file created.")
