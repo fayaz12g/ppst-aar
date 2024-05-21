@@ -7,11 +7,11 @@ def download_extract_copy(input_folder, mod_name):
     import getpass
 
     # URL of the ZIP file
-    zip_url = "https://github.com/fayaz12g/aar-files/raw/main/mvdk/UI.zip"
-    zip2_url = "https://github.com/fayaz12g/aar-files/raw/main/mvdk/Layout.zip"
+    zip_url = "https://github.com/fayaz12g/aar-files/raw/main/PPST/UI.zip"
+    zip2_url = "https://github.com/fayaz12g/aar-files/raw/main/PPST/Layout.zip"
 
     username = getpass.getuser()
-    directory_path = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/mvdk"
+    directory_path = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/PPST"
     # Check if the directory exists
     if not os.path.exists(directory_path):
         # Create the directory if it doesn't exist
@@ -19,7 +19,7 @@ def download_extract_copy(input_folder, mod_name):
         print(f"Directory {directory_path} created successfully.")
     else:
         print(f"Directory {directory_path} already exists.")
-    perm_folder = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/mvdk"
+    perm_folder = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/PPST"
     zip_file_source = os.path.join(perm_folder, "UI.zip")
     zip2_file_source = os.path.join(perm_folder, "Layout.zip")
 
