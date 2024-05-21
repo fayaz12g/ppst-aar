@@ -20,51 +20,20 @@ def asm_to_hex(asm_code):
     encoding, count = ks.asm(asm_code)
     return ''.join('{:02x}'.format(x) for x in encoding)
 
-def mvdk_hex23(num):
+def float_to_reversed_hex(num):
+    # Round the number to 15 decimal places
     num = round(num, 15)
+    
+    # Pack the number as a floating point number
     packed = struct.pack('!f', num)
+    
+    # Convert the packed bytes to hex representation
     full_hex = ''.join('{:02x}'.format(b) for b in packed)
-    hex_1 = full_hex[:4]
-    hex_2 = full_hex[4:]
-    asm_1 = f"movz w10, #0x{hex_2}"
-    asm_2 = f"movk w10, #0x{hex_1}, lsl #16"
-    asm_3 = f"movz w8, #0x{hex_2}"
-    asm_4 = f"movk w8, #0x{hex_1}, lsl #16"
-    hex_value1 = asm_to_hex(asm_1)
-    hex_value2 = asm_to_hex(asm_2)
-    hex_value3 = asm_to_hex(asm_3)
-    hex_value4 = asm_to_hex(asm_4)
-    return hex_value1, hex_value2, hex_value3, hex_value4
+    
+    # Reverse the hex in groups of two
+    reversed_hex = ''.join([full_hex[i:i+2] for i in range(0, len(full_hex), 2)][::-1])
+    
+    return reversed_hex
 
 def float2hex(f):
         return hex(struct.unpack('>I', struct.pack('<f', f))[0]).lstrip('0x').rjust(8,'0').upper()
-
-# This one finds the correct translation in correleation to the aspect ratio
-def do_some_math(num, ratio):
-    num = int(num)
-    ratio = int(ratio)
-    return ((num/(16/9))*(21/9))
-
-# This one finds the inverse value from the middle of the pane
-def do_special_math(num, ratio):
-    num = int(num)
-    ratio = int(ratio)
-    newnum = do_some_math(num, ratio)
-    return ((newnum*-1)+num)
-
-# This one is weird, and halfs the translation
-def do_weirder_math(num, ratio):
-    num = int(num)
-    ratio = int(ratio)
-    newnum = do_some_math(num, ratio)
-    newernum = (abs(newnum) - abs(num))/2
-    return (newernum+newnum)
-
-# This one moves the element the same amount Mario Lives is moved
-def do_specific_math(num, ratio):
-    num = int(num)
-    ratio = int(ratio)
-    lives = int(651)
-    newnum = do_some_math(lives, ratio)
-    newernum = (abs(newnum) - lives)
-    return (newernum+num)

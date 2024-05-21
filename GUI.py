@@ -45,7 +45,7 @@ root.geometry("540x760")
 
 customtkinter.set_appearance_mode("system")
 customtkinter.set_default_color_theme("blue")  
-windowtitle = customtkinter.CTkLabel(master=root, font=(CTkFont, 20), text="Fayaz's MVDK Utility {tool_version}")
+windowtitle = customtkinter.CTkLabel(master=root, font=(CTkFont, 20), text="Fayaz's PPST Utility {tool_version}")
 
 ###############################################
 ###########    GLOBAL SETTINGS      ###########
@@ -55,11 +55,11 @@ windowtitle = customtkinter.CTkLabel(master=root, font=(CTkFont, 20), text="Faya
 screen_width, screen_height = pyautogui.size()
 ar_numerator = StringVar(value=f"{screen_width}")
 ar_denominator = StringVar(value=f"{screen_height}")
-do_disable_fxaa = BooleanVar(value=True)
-do_disable_dynamicres = BooleanVar(value=True)
-do_disable_dof = BooleanVar(value=True)
+do_disable_fxaa = BooleanVar(value=False)
+do_disable_dynamicres = BooleanVar(value=False)
+do_disable_dof = BooleanVar(value=False)
 do_disable_bloom = BooleanVar(value=True)
-do_screenshot = BooleanVar(value=True)
+do_screenshot = BooleanVar(value=False)
 do_expirements = BooleanVar(value=False)
 
 
@@ -296,60 +296,64 @@ def select_mario_folder():
     if os.path.exists(text_folder):
         shutil.rmtree(text_folder)
 
-    #################
-    ## Downloading ##
-    #################
-
-    download_extract_copy(input_folder, mod_name)
-
-    # Create the PCHTXT Files
+    ################
+    ### Patching ###
+    ################
+    
     visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get())
     create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes, do_disable_bloom.get())
 
-    #################
-    # ZS Extraction #
-    #################
 
-    for root, _, files in os.walk(romfs_folder):
-        for file in files:
-            if file.lower().endswith(".zs"):
-                file_path = os.path.join(root, file)
-                print(f"Extracting {file}.")
-                decompress_zstd(file_path)
-                os.remove(file_path)
+    # #################
+    # ## Downloading ##
+    # #################
 
-    ####################
-    # BLARC Extraction #
-    ####################
+    # download_extract_copy(input_folder, mod_name)
 
-    for root, _, files in os.walk(romfs_folder):
-        for file in files:
-            if file.lower().endswith(".blarc"):
-                file_path = os.path.join(root, file)
-                print(f"Extracting {file}.")
-                extract_blarc(file_path)
-                os.remove(file_path)
+    # #################
+    # # ZS Extraction #
+    # #################
+
+    # for root, _, files in os.walk(romfs_folder):
+    #     for file in files:
+    #         if file.lower().endswith(".zs"):
+    #             file_path = os.path.join(root, file)
+    #             print(f"Extracting {file}.")
+    #             decompress_zstd(file_path)
+    #             os.remove(file_path)
+
+    # ####################
+    # # BLARC Extraction #
+    # ####################
+
+    # for root, _, files in os.walk(romfs_folder):
+    #     for file in files:
+    #         if file.lower().endswith(".blarc"):
+    #             file_path = os.path.join(root, file)
+    #             print(f"Extracting {file}.")
+    #             extract_blarc(file_path)
+    #             os.remove(file_path)
                 
-    ###########################
-    # Perform Pane Strecthing #
-    ###########################
+    # ###########################
+    # # Perform Pane Strecthing #
+    # ###########################
 
-    patch_blarc(str(ratio_value), HUD_pos, romfs_folder, do_expirements.get())
+    # patch_blarc(str(ratio_value), HUD_pos, romfs_folder, do_expirements.get())
 
     
-    ##########################
-    # Cleaning and Repacking #
-    ##########################
+    # ##########################
+    # # Cleaning and Repacking #
+    # ##########################
     
-    print("Repacking new blarc files. This step may take about 10 seconds")
-    for root, dirs, _ in os.walk(romfs_folder):
-        if "blyt" in dirs:
-            parent_folder = os.path.dirname(root)
-            new_blarc_file = os.path.join(parent_folder, os.path.basename(root) + ".blarc")
-            pack_folder_to_blarc(root, new_blarc_file)
-            shutil.rmtree(root) 
-            compress_zstd(new_blarc_file)
-            os.remove(new_blarc_file)
+    # print("Repacking new blarc files. This step may take about 10 seconds")
+    # for root, dirs, _ in os.walk(romfs_folder):
+    #     if "blyt" in dirs:
+    #         parent_folder = os.path.dirname(root)
+    #         new_blarc_file = os.path.join(parent_folder, os.path.basename(root) + ".blarc")
+    #         pack_folder_to_blarc(root, new_blarc_file)
+    #         shutil.rmtree(root) 
+    #         compress_zstd(new_blarc_file)
+    #         os.remove(new_blarc_file)
 
     ##########################
     #          Finish        #
@@ -381,12 +385,12 @@ def pack_widgets():
     aspect_ratio_divider.pack(side="left")
     denominator_entry.pack(side="left")
     
-    fxaa_checkbox.pack(padx=5, pady=5)
-    screenshot_checkbox.pack(padx=5, pady=5)
-    dynamicres_checkbox.pack(padx=10, pady=10)
-    # dof_checkbox.pack(padx=10, pady=10)
+    # fxaa_checkbox.pack(padx=5, pady=5)
+    # screenshot_checkbox.pack(padx=5, pady=5)
+    # dynamicres_checkbox.pack(padx=10, pady=10)
+    # # dof_checkbox.pack(padx=10, pady=10)
     bloom_checkbox.pack(padx=10, pady=10)
-    expirement_checkbox.pack(padx=10, pady=10)
+    # expirement_checkbox.pack(padx=10, pady=10)
     
     image_label.pack()
 
@@ -447,12 +451,12 @@ def forget_packing():
     aspect_ratio_divider.pack_forget()
     denominator_entry.pack_forget()
     
-    fxaa_checkbox.pack_forget()
-    screenshot_checkbox.pack_forget()
-    dynamicres_checkbox.pack_forget()
+    # fxaa_checkbox.pack_forget()
+    # screenshot_checkbox.pack_forget()
+    # dynamicres_checkbox.pack_forget()
     # dof_checkbox.pack_forget()
     bloom_checkbox.pack_forget()
-    expirement_checkbox.pack_forget()
+    # expirement_checkbox.pack_forget()
 
     image_label.pack_forget()
     image_layout_label.pack_forget()
@@ -532,7 +536,7 @@ fxaa_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="
 screenshot_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Depth of Field", variable=do_screenshot)
 dynamicres_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="2880x1620 Docked", variable=do_disable_dynamicres)
 dof_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Depth of Field (DOF)", variable=do_disable_dof)
-bloom_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Ultrawide Camera", variable=do_disable_bloom)
+bloom_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="HUD Fix", variable=do_disable_bloom)
 expirement_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Expiremental Menu", variable=do_expirements)
 
 ##########################
@@ -702,7 +706,7 @@ notebook.add("Credits")
 
 credits_label = ClickableLabel(master=notebook.tab("Credits"), text=
                     ('Utility created by fayaz\n'
-                     'https://github.com/fayaz12g/mvdk-aar\n'
+                     'https://github.com/fayaz12g/PPST-aar\n'
                      'ko-fi.com/fayaz12\n'
                      '\n\nWith thanks to\n'
                      'fruithapje21\n'
