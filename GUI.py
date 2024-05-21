@@ -37,7 +37,7 @@ import pyautogui
 #### Create Window ####
 #######################
 
-tool_version = "1.0.1"
+tool_version = "1.1.0"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Princess Peach: Showtime!")
@@ -55,9 +55,9 @@ windowtitle = customtkinter.CTkLabel(master=root, font=(CTkFont, 20), text="Faya
 screen_width, screen_height = pyautogui.size()
 ar_numerator = StringVar(value=f"{screen_width}")
 ar_denominator = StringVar(value=f"{screen_height}")
-do_disable_fxaa = BooleanVar(value=False)
-do_disable_dynamicres = BooleanVar(value=False)
-do_disable_dof = BooleanVar(value=False)
+do_disable_fxaa = BooleanVar(value=True)
+do_disable_dynamicres = BooleanVar(value=True)
+do_disable_dof = BooleanVar(value=True)
 do_disable_bloom = BooleanVar(value=True)
 do_screenshot = BooleanVar(value=False)
 do_expirements = BooleanVar(value=False)
@@ -385,10 +385,10 @@ def pack_widgets():
     aspect_ratio_divider.pack(side="left")
     denominator_entry.pack(side="left")
     
-    # fxaa_checkbox.pack(padx=5, pady=5)
+    fxaa_checkbox.pack(padx=5, pady=5)
     # screenshot_checkbox.pack(padx=5, pady=5)
-    # dynamicres_checkbox.pack(padx=10, pady=10)
-    # # dof_checkbox.pack(padx=10, pady=10)
+    dynamicres_checkbox.pack(padx=10, pady=10)
+    dof_checkbox.pack(padx=10, pady=10)
     bloom_checkbox.pack(padx=10, pady=10)
     # expirement_checkbox.pack(padx=10, pady=10)
     
@@ -451,10 +451,10 @@ def forget_packing():
     aspect_ratio_divider.pack_forget()
     denominator_entry.pack_forget()
     
-    # fxaa_checkbox.pack_forget()
+    fxaa_checkbox.pack_forget()
     # screenshot_checkbox.pack_forget()
-    # dynamicres_checkbox.pack_forget()
-    # dof_checkbox.pack_forget()
+    dynamicres_checkbox.pack_forget()
+    dof_checkbox.pack_forget()
     bloom_checkbox.pack_forget()
     # expirement_checkbox.pack_forget()
 
@@ -534,7 +534,7 @@ denominator_entry.bind("<FocusOut>", lambda event: handle_focus_out(denominator_
 
 fxaa_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="120 FPS (Expiremental)", variable=do_disable_fxaa)
 screenshot_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Depth of Field", variable=do_screenshot)
-dynamicres_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="2880x1620 Docked", variable=do_disable_dynamicres)
+dynamicres_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="2560x1440 Docked", variable=do_disable_dynamicres)
 dof_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Depth of Field (DOF)", variable=do_disable_dof)
 bloom_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="HUD Fix", variable=do_disable_bloom)
 expirement_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Expiremental Menu", variable=do_expirements)
